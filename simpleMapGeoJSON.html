@@ -43,6 +43,14 @@ var geojsonFeature = {
 };
 // and add it to the map
 L.geoJSON(geojsonFeature).addTo(mymap).bindPopup("<b>"+geojsonFeature.properties.name+""+geojsonFeature.properties.popupContent+"<b>");
+var popup = L.popup();
+function onMapClick(e) {
+popup
+.setLatLng(e.latlng)
+.setContent("You clicked the map at " + e.latlng.toString())
+.openOn(mymap);
+}
+mymap.on('click', onMapClick);
 </script>
 </body>
 </html>
