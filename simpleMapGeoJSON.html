@@ -10,6 +10,9 @@ integrity="sha512-
 mNqn2Wg7tSToJhvHcqfzLMU6J4mkOImSPTxVZAdo+lcPlk+GhZmYgACEe0x35K7YzW1zJ7XyJV/TT1MrdXvMcA==
 "
 crossorigin=""></script>
+<link rel="stylesheet" href="ionicons.min.css">
+<link rel="stylesheet" href="leaflet.awesome-markers.css">
+<script src="leaflet.awesome-markers.js"></script>
 <!-- the following CSS is used to set the size of the Map -->
 <style type="text/css">#mapid { height: 180px; }
 </style>
@@ -29,6 +32,11 @@ attribution: 'Map data &copy;<a href="http://openstreetmap.org">OpenStreetMap</a
 '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>,'+'Imagery © <a href="http://mapbox.com">Mapbox</a>',
 id: 'mapbox.streets'
 }).addTo(mymap);
+// creating a custom icon
+var testMarkerPink = L.AwesomeMarkers.icon({
+icon: 'play',
+markerColor: 'pink'
+});
 // create a geoJSON feature -
 var geojsonFeature = {
 "type": "Feature",
@@ -42,7 +50,12 @@ var geojsonFeature = {
 }
 };
 // and add it to the map
-L.geoJSON(geojsonFeature).addTo(mymap).bindPopup("<b>"+geojsonFeature.properties.name+""+geojsonFeature.properties.popupContent+"<b>");
+L.geoJSON(geojsonFeature, {
+pointToLayer: function (feature, latlng) {
+return L.marker(latlng, {icon:testMarkerPink});
+}
+}).addTo(mymap).bindPopup("<b>"+geojsonFeature.properties.name+""+geojsonFeature.properties.popupContent+"<b>");
+// movable marker 
 var popup = L.popup();
 function onMapClick(e) {
 popup
